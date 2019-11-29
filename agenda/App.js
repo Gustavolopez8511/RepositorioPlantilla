@@ -1,5 +1,5 @@
-//import * as React from 'react';
-import React, { Component } from 'react';
+import * as React from 'react';
+//import React, { Component } from 'react';
 
 import { StyleSheet, View, Alert, TextInput, Button, Text, Platform, TouchableOpacity, ListView, ActivityIndicator } from 'react-native';
 import { createAppContainer } from 'react-navigation';
@@ -47,15 +47,17 @@ class MainActivity extends React.Component {
       },
       body: JSON.stringify({
 
-        student_name : this.state.TextInput_nomproveedor,
+        nomproveedor : this.state.TextInput_Nomproveedor,
 
-        student_class : this.state.TextInput_nit,
+        nit : this.state.TextInput_Nit,
 
-        student_phone_number : this.state.TextInput_telefono,
+        telefono : this.state.TextInput_Telefono,
 
-        student_email: this.state.TextInput_direccion,
+        direccion: this.state.TextInput_Direccion,
 
-        student_email: this.state.TextInput_correo
+        correo: this.state.TextInput_Correo,
+
+        contraseña: this.state.TextInput_Contraseña
 
 
       })
@@ -86,10 +88,10 @@ class MainActivity extends React.Component {
        <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 7}}>  Registro de Proveedores</Text>
  
        <TextInput
-         
+
          placeholder="Ingrese Nombre"
 
-         onChangeText={ TextInputValue => this.setState({ TextInput_Student_Name : TextInputValue }) }
+         onChangeText={ TextInputValue => this.setState({ TextInput_Nomproveedor : TextInputValue }) }
 
          underlineColorAndroid='transparent'
 
@@ -100,7 +102,7 @@ class MainActivity extends React.Component {
          
          placeholder="Ingrese Nit"
 
-         onChangeText={ TextInputValue => this.setState({ TextInput_Student_Class : TextInputValue }) }
+         onChangeText={ TextInputValue => this.setState({ TextInput_Nit : TextInputValue }) }
 
          underlineColorAndroid='transparent'
 
@@ -111,7 +113,7 @@ class MainActivity extends React.Component {
          
          placeholder="Ingrese Teléfono"
 
-         onChangeText={ TextInputValue => this.setState({ TextInput_Student_PhoneNumber : TextInputValue }) }
+         onChangeText={ TextInputValue => this.setState({ TextInput_Telefono : TextInputValue }) }
 
          underlineColorAndroid='transparent'
 
@@ -122,7 +124,7 @@ class MainActivity extends React.Component {
 
          placeholder="Ingrese Dirección"
 
-         onChangeText={ TextInputValue => this.setState({ TextInput_Student_Email : TextInputValue }) }
+         onChangeText={ TextInputValue => this.setState({ TextInput_Direccion : TextInputValue }) }
 
          underlineColorAndroid='transparent'
 
@@ -144,20 +146,20 @@ class MainActivity extends React.Component {
 
          placeholder="Ingrese Contraseña"
 
-         onChangeText={ TextInputValue => this.setState({ TextInput_Student_Email : TextInputValue }) }
+         onChangeText={ TextInputValue => this.setState({ TextInput_Correo : TextInputValue }) }
 
          underlineColorAndroid='transparent'
 
          style={styles.TextInputStyleClass}
        />
 
-      <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.InsertStudentRecordsToServer} >
+      <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.InsertRecordsToServer} > 
 
         <Text style={styles.TextStyle}> Guardar Proveedores </Text>
 
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.GoTo_Show_StudentList_Activity_Function} >
+      <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.GoTo_Show_supplier_Activity_Function} >
 
         <Text style={styles.TextStyle}> Listar Proveedores  </Text>
 
@@ -217,15 +219,17 @@ class ShowSupplierListActivity extends React.Component {
          });
      }
     
-     GetSupplierIDFunction=(student_id,student_name, student_class, student_phone_number, student_email)=>{
+     GetSupplierIDFunction=(id,nomproveedor, nit, telefono, direccion, correo, contraseña)=>{
 
           this.props.navigation.navigate('Third', { 
 
-            ID : student_id,
-            NAME : student_name,
-            CLASS : student_class,
-            PHONE_NUMBER : student_phone_number,
-            EMAIL : student_email
+            ID : id,
+            NOMBRE : nomproveedor,
+            NIT : nit,
+            NUMERO_TELEFONO : telefono,
+            DIRECCION : direccion,
+            CORREO : correo,
+            CONTRASEÑA : contraseña
 
           });
 
@@ -265,14 +269,16 @@ class ShowSupplierListActivity extends React.Component {
             renderRow={ (rowData) => <Text style={styles.rowViewContainer} 
 
                       onPress={this.GetSupplierIDFunction.bind(
-                        this, rowData.student_id,
-                         rowData.student_name, 
-                         rowData.student_class, 
-                         rowData.student_phone_number, 
-                         rowData.student_email
+                        this, rowData.id,
+                         rowData.nomproveedor, 
+                         rowData.nit, 
+                         rowData.telefono, 
+                         rowData.direccion,
+                         rowData.correo,
+                         rowData.contraseña
                          )} > 
 
-                      {rowData.student_name} 
+                      {rowData.nomproveedor} 
                       
                       </Text> }
    
@@ -284,7 +290,7 @@ class ShowSupplierListActivity extends React.Component {
 
 }
 //
-class EditStudentRecordActivity extends React.Component {
+class EditSupplierRecordActivity extends React.Component {
   
   constructor(props) {
     
@@ -319,10 +325,10 @@ class EditStudentRecordActivity extends React.Component {
   
     static navigationOptions =
     {
-       title: 'EditStudentRecordActivity',
+       title: 'EditSupplierRecordActivity',
     };
 
-    UpdateStudentRecord = () =>{
+    UpdateSupplierRecord = () =>{
       
             fetch('http://172.16.58.126:8081/rnacademic/UpdateStudentRecord.php', {
             method: 'POST',
@@ -332,16 +338,20 @@ class EditStudentRecordActivity extends React.Component {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-      
-              student_id : this.state.TextInput_Student_ID,
+              
+              id : this.state.TextInput_ID,
 
-              student_name : this.state.TextInput_Student_Name,
+              nomproveedor : this.state.TextInput_Nomproveedor,
       
-              student_class : this.state.TextInput_Student_Class,
-      
-              student_phone_number : this.state.TextInput_Student_PhoneNumber,
-      
-              student_email: this.state.TextInput_Student_Email
+              nit : this.state.TextInput_Nit,
+
+              telefono : this.state.TextInput_Telefono,
+
+              direccion: this.state.TextInput_Direccion,
+
+              correo: this.state.TextInput_Correo,
+
+              contraseña: this.state.TextInput_Contraseña
       
             })
       
@@ -358,7 +368,7 @@ class EditStudentRecordActivity extends React.Component {
       }
 
 
-    DeleteStudentRecord = () =>{
+    DeleteSupplierRecord = () =>{
         
           fetch('http://172.16.58.126:8081/rnacademic/DeleteStudentRecord.php', {
           method: 'POST',
@@ -369,7 +379,7 @@ class EditStudentRecordActivity extends React.Component {
           },
           body: JSON.stringify({
         
-            student_id : this.state.TextInput_Student_ID
+            id : this.state.TextInput_ID
         
           })
         
@@ -393,15 +403,15 @@ class EditStudentRecordActivity extends React.Component {
    
    <View style={styles.MainContainer}>
    
-          <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 7}}> Edit Student Record Form </Text>
+          <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 7}}> Edit Supplier Record Form </Text>
     
           <TextInput
             
-            placeholder="Ingrese nombre"
+            placeholder="Ingrese Nombre"
             
-            value={this.state.TextInput_Student_Name}
+            value={this.state.TextInput_Nomproveedor}
    
-            onChangeText={ TextInputValue => this.setState({ TextInput_Student_Name : TextInputValue }) }
+            onChangeText={ TextInputValue => this.setState({ TextInput_Nomproveedor : TextInputValue }) }
    
             underlineColorAndroid='transparent'
    
@@ -410,11 +420,11 @@ class EditStudentRecordActivity extends React.Component {
    
          <TextInput
             
-            placeholder="Ingrese clase o asignatura"
+            placeholder="Ingrese Nit"
 
-            value={this.state.TextInput_Student_Class}
+            value={this.state.TextInput_Nit}
    
-            onChangeText={ TextInputValue => this.setState({ TextInput_Student_Class : TextInputValue }) }
+            onChangeText={ TextInputValue => this.setState({ TextInput_Nit : TextInputValue }) }
    
             underlineColorAndroid='transparent'
    
@@ -425,9 +435,9 @@ class EditStudentRecordActivity extends React.Component {
             
             placeholder="Ingrese número de teléfono"
 
-            value={this.state.TextInput_Student_PhoneNumber}
+            value={this.state.TextInput_Telefono}
    
-            onChangeText={ TextInputValue => this.setState({ TextInput_Student_PhoneNumber : TextInputValue }) }
+            onChangeText={ TextInputValue => this.setState({ TextInput_Telefono : TextInputValue }) }
    
             underlineColorAndroid='transparent'
    
@@ -436,24 +446,50 @@ class EditStudentRecordActivity extends React.Component {
    
           <TextInput
    
-            placeholder="Ingrese correo electrónico"
+            placeholder="Ingrese Dirección"
 
-            value={this.state.TextInput_Student_Email}
+            value={this.state.TextInput_Direccion}
    
-            onChangeText={ TextInputValue => this.setState({ TextInput_Student_Email : TextInputValue }) }
+            onChangeText={ TextInputValue => this.setState({ TextInput_Direccion : TextInputValue }) }
+   
+            underlineColorAndroid='transparent'
+   
+            style={styles.TextInputStyleClass}
+          />
+
+          <TextInput
+   
+            placeholder="Ingrese Correo"
+
+            value={this.state.TextInput_Correo}
+   
+            onChangeText={ TextInputValue => this.setState({ TextInput_Correo : TextInputValue }) }
+   
+            underlineColorAndroid='transparent'
+   
+            style={styles.TextInputStyleClass}
+          />
+
+          <TextInput
+   
+            placeholder="Ingrese Contraseña"
+
+            value={this.state.TextInput_Contraseña}
+   
+            onChangeText={ TextInputValue => this.setState({ TextInput_Contraseña : TextInputValue }) }
    
             underlineColorAndroid='transparent'
    
             style={styles.TextInputStyleClass}
           />
    
-         <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.UpdateStudentRecord} >
+         <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.UpdateSupplierRecord} >
    
             <Text style={styles.TextStyle}> Actualizar Proveedores </Text>
    
          </TouchableOpacity>
    
-         <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.DeleteStudentRecord} >
+         <TouchableOpacity activeOpacity = { .4 } style={styles.TouchableOpacityStyle} onPress={this.DeleteSupplierRecord} >
    
             <Text style={styles.TextStyle}> Eliminar Proveedores</Text>
    
@@ -474,7 +510,7 @@ const RootStack = createStackNavigator(
 
     Second:  { screen: ShowSupplierListActivity },
 
-    Third: { screen: EditStudentRecordActivity }, 
+    Third: { screen: EditSupplierRecordActivity }, 
 
   },
   {
@@ -514,7 +550,7 @@ const styles = StyleSheet.create({
 
   },
 
-  MainContainer_For_Show_StudentList_Activity :{
+  MainContainer_For_Show_SupplierList_Activity :{
     
     flex:1,
     paddingTop: (Platform.OS == 'ios') ? 20 : 0,
