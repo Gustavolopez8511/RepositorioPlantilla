@@ -38,7 +38,7 @@ class MainActivity extends React.Component {
   */
  InsertRecordsToServer = () =>{
 
-      fetch('http://172.16.58.126:8081/rnacademic/InsertStudentData.php', {  
+      fetch('http://172.16.58.126:8081/agenda/agenda/server/controllers/proveedoresC.js', {  
       method: 'POST',
       mode: 'no-cors',
       headers: {
@@ -195,7 +195,7 @@ class ShowSupplierListActivity extends React.Component {
 
   componentDidMount() {
     
-       return fetch('http://172.16.58.126:8081/Momento3/agenda_r/server/server.js',{ 
+       return fetch('http://172.16.58.126:8081/agenda/agenda/server/controllers/proveedoresC.js',{ 
         method: 'POST', 
         mode: 'no-cors',
         headers: {
@@ -330,7 +330,7 @@ class EditSupplierRecordActivity extends React.Component {
 
     UpdateSupplierRecord = () =>{
       
-            fetch('http://172.16.58.126:8081/rnacademic/UpdateStudentRecord.php', {
+            fetch('http://172.16.58.126:8081/agenda/agenda/server/controllers/proveedoresC.js', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -370,7 +370,7 @@ class EditSupplierRecordActivity extends React.Component {
 
     DeleteSupplierRecord = () =>{
         
-          fetch('http://172.16.58.126:8081/rnacademic/DeleteStudentRecord.php', {
+          fetch('http://172.16.58.126:8081/agenda/agenda/server/controllers/proveedoresC.js', {
           method: 'POST',
           mode: 'no-cors',
           headers: {
